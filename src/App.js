@@ -1,11 +1,7 @@
-import Todo from "./component/Todo";
+import Todo from "./Components/Todo";
 
 function App() {
-    return (
-        <>
-            <Todo />
-        </>
-    );
+    return <Todo />;
 }
 
 export default App;
