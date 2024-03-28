@@ -40,13 +40,14 @@ const Todo = () => {
         if (value === "") {
             const button = document.getElementById("add_button");
             button.disabled = true; // 禁用按鈕
-            setInputError(true);
+            setInputError(true); // 顯示錯誤提示
 
             // 3 秒後解除禁用按鈕和錯誤提示
             setTimeout(() => {
                 setInputError(false);
                 button.disabled = false;
             }, 3000);
+
             alert("請輸入待辦事項!");
         } else {
             setTodoList([
@@ -81,11 +82,17 @@ const Todo = () => {
             <div className="addTask_container">
                 <p>What needs to be done?</p>
                 <input
+                    id="input"
                     type="text"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     className={inputError ? "input_error" : null}
                     placeholder="Add a new task..."
+                    onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                            addTask(e);
+                        }
+                    }}
                 />
                 <button onClick={addTask} id="add_button">
                     {`Add #${todoList.length + 1}`}
@@ -112,7 +119,7 @@ const Todo = () => {
             </ul>
             {/* addTask_container end */}
 
-            {/* <h3>{`${todoList.length} Tasks`}</h3> */}
+            {/* List */}
             <div className="todoList_container">
                 <ul className="todoList_ul">
                     {selector === 1 &&

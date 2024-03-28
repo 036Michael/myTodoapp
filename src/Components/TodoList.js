@@ -1,7 +1,42 @@
 import React from "react";
+import TodoItem from "./TodoItem";
 
-const TodoList = () => {
-  return <div>TodoList</div>;
+const TodoList = ({ todoList, selector, deleteTask, setTodoList }) => {
+    return (
+        <div className="todoList_container">
+            <ul className="todoList_ul">
+                {selector === 1 &&
+                    todoList.map((item) => (
+                        <TodoItem
+                            key={item.id}
+                            item={item}
+                            setTodoList={setTodoList}
+                        />
+                    ))}
+                {selector === 2 &&
+                    todoList
+                        .filter((item) => !item.isDone)
+                        .map((item) => (
+                            <TodoItem
+                                key={item.id}
+                                item={item}
+                                setTodoList={setTodoList}
+                            />
+                        ))}
+                {selector === 3 &&
+                    todoList
+                        .filter((item) => item.isDone)
+                        .map((item) => (
+                            <TodoItem
+                                key={item.id}
+                                item={item}
+                                setTodoList={setTodoList}
+                                deleteTask={deleteTask}
+                            />
+                        ))}
+            </ul>
+        </div>
+    );
 };
 
 export default TodoList;
