@@ -11,6 +11,7 @@ const TodoList = ({ todoList, selector, deleteTask, setTodoList }) => {
                             key={item.id}
                             item={item}
                             setTodoList={setTodoList}
+                            deleteTask={() => deleteTask(item.id)}
                         />
                     ))}
                 {selector === 2 &&
@@ -21,6 +22,7 @@ const TodoList = ({ todoList, selector, deleteTask, setTodoList }) => {
                                 key={item.id}
                                 item={item}
                                 setTodoList={setTodoList}
+                                deleteTask={() => deleteTask(item.id)}
                             />
                         ))}
                 {selector === 3 &&
@@ -31,7 +33,7 @@ const TodoList = ({ todoList, selector, deleteTask, setTodoList }) => {
                                 key={item.id}
                                 item={item}
                                 setTodoList={setTodoList}
-                                deleteTask={deleteTask}
+                                deleteTask={() => deleteTask(item.id)}
                             />
                         ))}
             </ul>
