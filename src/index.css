@@ -97,6 +97,45 @@ h2 {
 .addTask_container button:hover {
     background-color: var(--success-color);
 }
+fieldset {
+    display: flex;
+    margin: auto;
+    /* border: none; */
+}
+
+fieldset label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+fieldset legend {
+    display: flex;
+    font-weight: bold;
+    margin: 5px 0 10px 0;
+    padding: 0px 10px 0px 0px;
+    color: var(--text-color);
+}
+
+.caption-text {
+    display: inline-block;
+}
+.caption-text::after {
+    content: "";
+    z-index: -1;
+}
+
+fieldset div {
+    display: flex;
+    margin: 0 5px;
+    flex-direction: column;
+}
+
+.addTask_container fieldset div input {
+    width: 20px;
+    padding: 0;
+    margin: 0;
+}
 
 .selector {
     display: flex;
@@ -216,5 +255,72 @@ footer {
     .todoList_container {
         width: 300px;
         height: 100%;
+    }
+}
+
+.caption-container {
+    position: absolute;
+    right: -2px;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .caption {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* cursor: pointer; */
+        position: relative;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .caption-toggle {
+        transition: 0.5s;
+        display: none;
+    }
+    .caption-toggle-on {
+        transition: 0.5s;
+        position: absolute;
+        top: 2px;
+        left: 20px;
+        font-size: 0.8em;
+        background-color: var(--background-color);
+
+        &:hover {
+            display: block;
+        }
+    }
+
+    li {
+        list-style: none;
+        text-align: left;
+        font-weight: bold;
+        width: 220px;
+        padding: 5px 2px;
+    }
+}
+
+.todoList_ul,
+.caption-container {
+    .red {
+        background-color: rgba(255, 0, 0, 0.5);
+    }
+    .orange {
+        background-color: rgba(255, 166, 0, 0.5);
+    }
+
+    .yellow {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+
+    .blue {
+        background-color: rgba(0, 0, 255, 0.5);
+    }
+    .green {
+        background-color: rgba(0, 128, 0, 0.5);
     }
 }

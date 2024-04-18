@@ -9,9 +9,25 @@ const TodoItem = ({ item, setTodoList, deleteTask }) => {
             )
         );
     };
-
+    const importantColor = () => {
+        const expr = item.important;
+        switch (expr) {
+            case 1:
+                return "red";
+            case 2:
+                return "orange";
+            case 3:
+                return "yellow";
+            case 4:
+                return "green";
+            case 5:
+                return "blue";
+            default:
+                return "";
+        }
+    };
     return (
-        <li className="hoveredLi">
+        <li className={`hoveredLi ${importantColor()}`}>
             <span onClick={toggleTodo} className={item.isDone ? "done" : ""}>
                 <div className="date">{item.date}</div>
                 {item.todo}
