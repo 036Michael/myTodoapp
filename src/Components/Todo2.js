@@ -10,6 +10,7 @@ const Todo = () => {
     const [selector, setSelector] = useState(2); // 選擇器 [1:全部, 2:待辦, 3:已完成]
     const [important, setImportant] = useState(1); // 重要程度
     const [toggle, setToggle] = useState(true); // 開關 [true:開, false:關
+    const [date, setDate] = useState(""); // 截止日期 [yyyy-mm-dd
 
     // 取得 localStorage 的資料
     useEffect(() => {
@@ -18,6 +19,29 @@ const Todo = () => {
             setTodoList(JSON.parse(data));
         }
     }, []);
+
+    const expiredDateCount = (date) => {
+        let expDateformatted = date.replace(/-/g, "/");
+        // let formattedDate = date.replace(/\//g, "-"); //換成 - 格式
+        let expDate = new Date(expDateformatted); // 截止日期
+        let today = new Date(); // 今天日期
+
+        let timeDifferent = expDate.getTime() - today.getTime();
+        let remainingDays = Math.ceil(timeDifferent / (1000 * 3600 * 24)); // 將毫秒轉換為天數並向上取整
+
+        console.log(remainingDays);
+
+        today = today.toLocaleDateString();
+        expDate = expDate.toLocaleDateString();
+
+        return { today, expDate, remainingDays };
+    };
+
+    const clearAllInput = () => {
+        setValue("");
+        setDate("");
+        setImportant(0);
+    };
 
     // 新增待辦事項
     const addTask = (e) => {
@@ -33,18 +57,26 @@ const Todo = () => {
             alert("請輸入待辦事項!");
         } else if (important === 0) {
             alert("請選擇重要程度!");
+        } else if (date === "") {
+            alert("請選擇截止日期!");
+        } else if (date < new Date().toISOString().slice(0, 10)) {
+            alert("截止日期不可小於今天!");
         } else {
+            const { today, expDate, remainingDays } = expiredDateCount(date);
+
             setTodoList([
                 ...todoList,
                 {
                     id: uuid().substring(0, 8),
-                    todo: value.trim(),
-                    isDone: false,
-                    date: new Date().toLocaleString().substring(0, 22), // 日期,
-                    important: important,
+                    todo: value.trim(), // 待辦事項
+                    isDone: false, // 是否完成
+                    date: today, // 今天日期
+                    important: important, // 重要程度
+                    expDate: expDate, // 截止日期
+                    remainingDays: remainingDays, // 剩餘天數
                 },
             ]);
-            setValue("");
+            clearAllInput();
         }
     };
 
@@ -63,12 +95,12 @@ const Todo = () => {
         for (let i = 1; i < 6; i++) {
             html.push(
                 <div key={i}>
-                    <label htmlFor="important-rate">{i}</label>
+                    <label>{i}</label>
                     <input
                         type="radio"
                         name="important-rate"
                         value={i}
-                        onClick={() => {
+                        onChange={() => {
                             setImportant(i);
                         }}
                         checked={important === i}
@@ -99,41 +131,62 @@ const Todo = () => {
                         }
                     }}
                 />
-                <fieldset>
-                    <legend>
-                        <div className="caption-text">重要程度</div>
-                        <div className="caption-container">
-                            <span
-                                className="caption"
-                                onMouseEnter={() => {
-                                    setToggle(!toggle);
-                                }}
-                                onMouseLeave={() => {
-                                    setToggle(!toggle);
-                                }}>
-                                <IoMdHelpCircleOutline />
-                            </span>
-                            <div
-                                className={
-                                    toggle
-                                        ? "caption-toggle"
-                                        : "caption-toggle-on"
-                                }>
-                                <li className="red">1 : 非常重要</li>
-                                <li className="orange">2 : 重要</li>
-                                <li className="yellow">3 : 還好</li>
-                                <li className="green">
-                                    4 : 目前不重要，緊急的時候開始執行
-                                </li>
-                                <li className="blue">
-                                    5 : 不太重要，但是之後會執行
-                                </li>
+                <div className="fieldset-wrapper">
+                    <fieldset>
+                        <legend>
+                            <div className="caption-text">重要程度</div>
+                            <div className="caption-container">
+                                <span
+                                    className="caption"
+                                    onMouseEnter={() => {
+                                        setToggle(!toggle);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setToggle(!toggle);
+                                    }}>
+                                    <IoMdHelpCircleOutline />
+                                </span>
+                                <div
+                                    className={
+                                        toggle
+                                            ? "caption-toggle"
+                                            : "caption-toggle-on"
+                                    }>
+                                    <li className="red">1 : 非常重要</li>
+                                    <li className="orange">2 : 重要</li>
+                                    <li className="yellow">3 : 還好</li>
+                                    <li className="green">
+                                        4 : 目前不重要，緊急的時候開始執行
+                                    </li>
+                                    <li className="blue">
+                                        5 : 不太重要，但是之後會執行
+                                    </li>
+                                </div>
                             </div>
-                        </div>
-                    </legend>
+                        </legend>
 
-                    {importantRate()}
-                </fieldset>
+                        {importantRate()}
+                    </fieldset>
+                    <fieldset>
+                        <legend>
+                            <div className="caption-text">截止日期</div>
+                            <div className="caption-container"></div>
+                        </legend>
+                        <input
+                            type="date"
+                            name="date"
+                            id="date"
+                            value={date}
+                            onChange={(e) => {
+                                setDate(e.target.value);
+                            }}
+                            onClick={() => {
+                                setDate(date);
+                            }}
+                        />
+                    </fieldset>
+                </div>
+
                 <button onClick={addTask} id="add_button">
                     {`Add #${todoList.length + 1}`}
                 </button>

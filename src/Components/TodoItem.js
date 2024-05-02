@@ -28,10 +28,16 @@ const TodoItem = ({ item, setTodoList, deleteTask }) => {
     };
     return (
         <li className={`hoveredLi ${importantColor()}`}>
-            <span onClick={toggleTodo} className={item.isDone ? "done" : ""}>
+            <span
+                onClick={toggleTodo}
+                className={item.isDone ? "done" : "notDone"}>
                 <div className="date">{item.date}</div>
-                {item.todo}
+                <div className="textwrap">{item.todo}</div>
+                <span className="tooltiptext">
+                    {item.isDone ? "click to done" : "click to not done"}
+                </span>
             </span>
+
             <span onClick={() => deleteTask(item.id)}>
                 <MdDeleteForever size={20} />
             </span>
