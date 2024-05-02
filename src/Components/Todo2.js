@@ -100,10 +100,10 @@ const Todo = () => {
                     }}
                 />
                 <fieldset>
-                    <legend style={{ position: "relative" }}>
+                    <legend>
                         <div className="caption-text">重要程度</div>
                         <div className="caption-container">
-                            <h4
+                            <span
                                 className="caption"
                                 onMouseEnter={() => {
                                     setToggle(!toggle);
@@ -112,8 +112,8 @@ const Todo = () => {
                                     setToggle(!toggle);
                                 }}>
                                 <IoMdHelpCircleOutline />
-                            </h4>
-                            <span
+                            </span>
+                            <div
                                 className={
                                     toggle
                                         ? "caption-toggle"
@@ -128,7 +128,7 @@ const Todo = () => {
                                 <li className="blue">
                                     5 : 不太重要，但是之後會執行
                                 </li>
-                            </span>
+                            </div>
                         </div>
                     </legend>
 

@@ -110,25 +110,25 @@ fieldset label {
 }
 
 fieldset legend {
+    position: relative;
     display: flex;
     font-weight: bold;
-    margin: 5px 0 10px 0;
-    padding: 0px 10px 0px 0px;
+    padding: 0px 15px 0px 10px;
     color: var(--text-color);
 }
-
 .caption-text {
     display: inline-block;
 }
-.caption-text::after {
-    content: "";
-    z-index: -1;
-}
 
-fieldset div {
+fieldset > div {
     display: flex;
     margin: 0 5px;
     flex-direction: column;
+    /* background-color: #fff; */
+}
+
+legend div {
+    margin: 0;
 }
 
 .addTask_container fieldset div input {
@@ -199,7 +199,7 @@ h3 {
 
 .done {
     text-decoration: line-through;
-    color: #a5a5a5;
+    color: #3c3c3c;
 }
 
 .doneLi {
@@ -260,38 +260,50 @@ footer {
 
 .caption-container {
     position: absolute;
-    right: -2px;
-    margin: 0;
-    height: 100%;
+    top: 3px;
+    left: 75px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    margin: 0;
+    font-size: 0.8em;
 
     .caption {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* cursor: pointer; */
-        position: relative;
-        &:hover {
-            opacity: 0.6;
-        }
+        width: 15px;
+        height: 15px;
+    }
+
+    .caption svg {
+        width: 15px;
+        height: 15px;
     }
 
     .caption-toggle {
-        transition: 0.5s;
-        display: none;
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        transition: 0.3s;
+        /* display: none; */
+        opacity: 0;
+        left: 17px;
+
+        li {
+            padding: 5px 5px;
+        }
     }
     .caption-toggle-on {
-        transition: 0.5s;
-        position: absolute;
-        top: 2px;
-        left: 20px;
-        font-size: 0.8em;
+        transition: 0.3s;
         background-color: var(--background-color);
+        position: absolute;
+        left: 17px;
 
         &:hover {
-            display: block;
+            visibility: visible;
+            opacity: 1;
+            /* display: block; */
+        }
+
+        li {
+            padding: 5px 5px;
         }
     }
 
@@ -308,6 +320,8 @@ footer {
 .caption-container {
     .red {
         background-color: rgba(255, 0, 0, 0.5);
+
+        border-radius: 5px 5px 0 0px;
     }
     .orange {
         background-color: rgba(255, 166, 0, 0.5);
@@ -319,6 +333,7 @@ footer {
 
     .blue {
         background-color: rgba(0, 0, 255, 0.5);
+        border-radius: 0px 0px 5px 5px;
     }
     .green {
         background-color: rgba(0, 128, 0, 0.5);
